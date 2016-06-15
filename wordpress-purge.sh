@@ -3,7 +3,10 @@
 echo -e "This script purges all packages installed from the \
 wordpress-install.sh script; including ALL MySQL and PHP packages. It also \
 purges ALL MySQL databases/files, ALL Apache directories/files, the wordpress \
-system user, and the /var/www/html directory."
+system user, and the /var/www/html directory.
+PLEASE NOTE:
+\t--MUST be ran as root
+\t--Only works on Ubuntu Server 16.04 LTS"
 
 read -p "Do you want to continue? (Y/n): " -n 1 -r
 echo
