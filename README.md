@@ -35,7 +35,7 @@ and the /var/www/html directory.
 ppa.sh
 -----
 
-This script lists all packages installed on Ubuntu.
+This script lists all PPAs installed on Ubuntu.
 
 installed-packages.sh
 -----

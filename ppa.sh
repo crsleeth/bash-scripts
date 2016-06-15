@@ -1,6 +1,6 @@
 #! /bin/sh 
 
-# This script lists all the PPAs installed on Ubuntu.
+# This script lists all PPAs installed on Ubuntu.
 
 for APT in `find /etc/apt/ -name \*.list`; do
     grep -o "^deb http://ppa.launchpad.net/[a-z0-9\-]\+/[a-z0-9\-]\+" $APT | while read ENTRY ; do
