@@ -79,8 +79,7 @@ sudo rm /var/www/html/index.html
 # Step 5
 chown -R wordpress:www-data /var/www/html
 chmod g+w /var/www/html/wp-content
-chmod -R g+w /var/www/html/wp-content/themes
-chmod -R g+w /var/www/html/wp-content/plugins
+chmod g+s /var/www/html/wp-content
 
 # Removes wp-config.php default unique keys and salts
 sed -i '/AUTH_KEY/d' /var/www/html/wp-config.php
