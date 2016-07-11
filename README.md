@@ -1,6 +1,6 @@
 bash-scripts is a collection of shell and bash scripts
 
-wordpress-install.sh
+wordpress-install
 -----
 
 Based on https://www.digitalocean.com/community/tutorials/how-to-install-wordpress-with-lamp-on-ubuntu-16-04
@@ -24,7 +24,7 @@ PLEASE NOTE:
  - If the script fails, or WordPress doesn't end up working try running the 
 companion wordpress-purge.sh script
 
-wordpress-purge.sh
+wordpress-purge
 -----
 
 This script purges all packages installed from the wordpress-install.sh 
@@ -37,15 +37,28 @@ PLEASE NOTE:
  - MUST be ran as root
  - Only works on Ubuntu Server 16.04 LTS
 
-ppa.sh
+ppa
 -----
 
-This script lists all PPAs installed on Ubuntu.
+Lists all PPAs installed on Ubuntu.
 
-installed-packages.sh
+installed-packages
 -----
 
-This script lists packages that have been installed on Ubuntu post-install. 
-It excludes packages that come pre-installed on Ubuntu, or were installed from 
-Ubuntu Server's "Software selection" installation step. Only tested on 
-Ubuntu 14 and 16.
+Lists packages that have been installed on Ubuntu post-install. It excludes 
+packages that come pre-installed on Ubuntu, or were installed from Ubuntu 
+Server's "Software selection" installation step. Only tested on Ubuntu 14 
+and 16.
+
+1GBswap
+-----
+
+Creates 1 GB swap file in /swapfile, designates it as swap, and appends fstab.
+
+PLEASE NOTE:
+ - MUST be ran as root
+
+apache-uniq
+-----
+
+Lists in order from most vists to least visits unique apache2 IP addresses.

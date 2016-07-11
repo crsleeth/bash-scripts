@@ -1,0 +1,7 @@
+#!/bin/bash
+
+# Lists in order from most vists to least visits unique apache2 IP addresses.
+
+cat /var/log/apache2/access.log | awk '{print $1}' | sort -n | uniq -c | sort -nr | head -20
+
+exit 0
