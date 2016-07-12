@@ -1,0 +1,8 @@
+#!/bin/bash
+
+# Installs youtube-dl on Ubuntu 14.04 LTS.
+
+sudo curl -L https://yt-dl.org/latest/youtube-dl -o /usr/local/bin/youtube-dl
+sudo chmod a+rx /usr/local/bin/youtube-dl
+
+exit 0

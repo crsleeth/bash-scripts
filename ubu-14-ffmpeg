@@ -1,0 +1,10 @@
+#!/bin/bash
+
+# Installs ffmpeg on Ubuntu 14.04 LTS.
+
+sudo add-apt-repository ppa:mc3man/trusty-media
+sudo apt-get update
+sudo apt-get dist-upgrade
+sudo apt-get install ffmpeg
+
+exit 0

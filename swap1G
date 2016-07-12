@@ -12,7 +12,7 @@ sudo fallocate -l 4G /swapfile
 
 echo "Changing /swapfile permissions to 600"
 sudo chmod 600 /swapfile
-ls -la /swapfile
+sudo ls -la /swapfile
 
 echo "Designating /swapfile as swap file"
 sudo mkswap /swapfile

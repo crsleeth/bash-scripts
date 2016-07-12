@@ -2,8 +2,8 @@
 
 # Based on https://www.digitalocean.com/community/tutorials/how-to-install-wordpress-with-lamp-on-ubuntu-16-04
 
-echo -e "This script installs WordPress and all prerequisites. It sets up \
-and configures Apache and MySQL to work with WordPress; including a WordPress \
+echo -e "wp-install installs WordPress and all prerequisites. It sets up and \
+configures Apache and MySQL to work with WordPress; including a WordPress \
 database and system user. Passwords for the MySQL root user, MySQL \
 wordpressuser, and system wordpress user will be stored in root protected \
 text files in the newly created wordpress-passwords directory. 

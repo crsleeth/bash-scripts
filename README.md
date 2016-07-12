@@ -1,11 +1,11 @@
 bash-scripts is a collection of shell and bash scripts
 
-wordpress-install
+wp-install
 -----
 
 Based on https://www.digitalocean.com/community/tutorials/how-to-install-wordpress-with-lamp-on-ubuntu-16-04
 
-This script installs WordPress and all prerequisites. It sets up and 
+wp-install installs WordPress and all prerequisites. It sets up and 
 configures Apache and MySQL to work with WordPress; including a WordPress 
 database and system user. Passwords for the MySQL root user, MySQL 
 wordpressuser, and system wordpress user will be stored in root protected 
@@ -22,15 +22,15 @@ PLEASE NOTE:
  - Only works on Ubuntu Server 16.04 LTS
  - The WordPress install is from WordPress' own latest.tar.gz
  - If the script fails, or WordPress doesn't end up working try running the 
-companion wordpress-purge.sh script
+companion wp-purge script
 
-wordpress-purge
+wp-purge
 -----
 
-This script purges all packages installed from the wordpress-install.sh 
-script; including ALL MySQL and PHP packages. It also purges ALL MySQL 
-databases/files, ALL Apache directories/files, the wordpress system user, 
-and the /var/www/html directory.
+wp-purge purges all packages installed from the wp-install script; including 
+ALL MySQL and PHP packages. It also purges ALL MySQL databases/files, ALL 
+Apache directories/files, the wordpress system user, and the /var/www/html 
+directory.
 
 PLEASE NOTE:
 
@@ -42,7 +42,7 @@ ppa
 
 Lists all PPAs installed on Ubuntu.
 
-installed-packages
+pkgs-installed
 -----
 
 Lists packages that have been installed on Ubuntu post-install. It excludes 
@@ -62,3 +62,19 @@ apache-uniq
 -----
 
 Lists in order from most vists to least visits unique apache2 IP addresses.
+
+ubu-14-ffmpeg
+-----
+
+Installs ffmpeg on Ubuntu 14.04 LTS.
+
+ubu-14-yt-dl
+-----
+
+Installs youtube-dl on Ubuntu 14.04 LTS.
+
+youtube-dl-mp3
+-----
+
+Downloads mp3s from YouTube, only requires a URL.
+Run with youtube-dl-mp3 <url>
