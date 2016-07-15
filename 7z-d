@@ -1,0 +1,12 @@
+#!/bin/bash
+
+# Best compression via 7z. Compresses all directories in current directory 
+# into individual files.
+# Run with 7z-d
+
+for i in */
+do
+	7z a -t7z -m0=lzma -mx=9 -mfb=64 -md=32m -ms=on "${i%/}.7z" "$i"
+done
+
+exit 0
