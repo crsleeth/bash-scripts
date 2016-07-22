@@ -10,13 +10,13 @@ echo "Testing write speed..."
 dd if=/dev/zero of=tempfile bs=1M count=1024
 
 echo "Clearing cache..."
-dd if=/dev/zero of=cachefile bs=1M count=$ram > /dev/null
+dd if=/dev/zero of=cachefile bs=1M count=$ram > /dev/null 2>$1
 
 echo "Testing read speed..."
 dd if=tempfile of=/dev/null bs=1M count=1024
 
 echo "Clearing cache..."
-dd if=/dev/zero of=cachefile bs=1M count=$ram > /dev/null
+dd if=/dev/zero of=cachefile bs=1M count=$ram > /dev/null 2>$1
 
 rm cachefile
 rm tempfile
