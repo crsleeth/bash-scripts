@@ -3,16 +3,22 @@
 # Tests disk write and then read speed. Must be ran as disk-speed <GB of RAM>. 
 # For example: disk-speed 8 for 8GB of RAM.
 
-ram=$((262144 * $1))
+ram=$((1024 * $1))
+echo "Your computer's RAM amount is: $ram"
 
 echo "Testing write speed..."
-time sh -c "dd if=/dev/zero of=/tmp/tempfile bs=4k count=2000000 && sync"
-dd if=/dev/zero of=/tmp/clearcache bs=4k count=$ram
+dd if=/dev/zero of=tempfile bs=1M count=1024
+
+echo "Clearing cache..."
+dd if=/dev/zero of=cachefile bs=1M count=$ram
 
 echo "Testing read speed..."
-time sh -c "dd if=/tmp/tempfile of=/dev/null bs=4k"
+dd if=tempfile of=/dev/null bs=1M count=1024
 
-rm /tmp/clearcache
-rm /tmp/tempfile
+echo "Clearing cache..."
+dd if=/dev/zero of=cachefile bs=1M count=$ram
+
+rm cachefile
+rm tempfile
 
 exit 0
