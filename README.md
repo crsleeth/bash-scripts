@@ -78,3 +78,19 @@ youtube-dl-mp3
 
 Downloads mp3s from YouTube, only requires a URL.
 Run with youtube-dl-mp3 <url>
+
+disk-speed
+-----
+Tests disk write and then read speed. Must be ran as disk-speed <GB of RAM>. 
+For example: disk-speed 8 for 8GB of RAM.
+
+7z-mk
+-----
+Best compression via 7z.
+Run with 7z-mk <file>
+
+7z-d
+-----
+Best compression via 7z. Compresses all directores in current directory info 
+individual files.
+Run with 7z-d
