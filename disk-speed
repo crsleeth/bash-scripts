@@ -1,0 +1,18 @@
+#!/bin/bash
+
+# Tests disk write and then read speed. Must be ran as disk-speed <GB of RAM>. 
+# For example: disk-speed 8 for 8GB of RAM.
+
+ram=$((262144 * $1))
+
+echo "Testing write speed..."
+time sh -c "dd if=/dev/zero of=/tmp/tempfile bs=4k count=2000000 && sync"
+dd if=/dev/zero of=/tmp/clearcache bs=4k count=$ram
+
+echo "Testing read speed..."
+time sh -c "dd if=/tmp/tempfile of=/dev/null bs=4k"
+
+rm /tmp/clearcache
+rm /tmp/tempfile
+
+exit 0
