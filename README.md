@@ -94,3 +94,7 @@ Run with 7z-mk <file>
 Best compression via 7z. Compresses all directores in current directory info 
 individual files.
 Run with 7z-d
+
+zip-mk
+-----
+Run with zip-mk <file>
