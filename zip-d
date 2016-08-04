@@ -1,0 +1,11 @@
+#!/bin/bash
+
+# Compresses all directories in current directory into individual files.
+# Run with zip-d
+
+for i in */
+do
+	zip -r "${i%/}.zip" "$i"
+done
+
+exit 0
