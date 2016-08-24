@@ -1,8 +1,0 @@
-#!/bin/bash
-
-# Downloads mp3s from YouTube, only requires a URL.
-# Run with youtube-dl-mp3 <url>
-
-youtube-dl --extract-audio --audio-format mp3 $1
-
-exit 0

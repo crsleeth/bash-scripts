@@ -1,7 +1,0 @@
-#!/bin/bash
-
-# Run with zip-mk <file>
-
-zip -r "${1%%/}.zip" "$1"
-
-exit 0
