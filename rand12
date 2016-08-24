@@ -1,0 +1,7 @@
+#!/bin/bash
+
+# Generates a random 12 character password.
+
+date +%s | sha256sum | base64 | head -c 12 ; echo
+
+exit 0
