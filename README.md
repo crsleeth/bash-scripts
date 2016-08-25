@@ -8,15 +8,22 @@ Run with 7zmk file.txt or 7zmk directory
 
 7zd
 -----
-7zs all files and directories int he present working directory individually.
+7zs all files and directories in the present working directory individually.
 
 Run with 7zd (nothing else)
 
 7ze
 -----
+Best compression via 7z. Also encrypts the file or directory.
+
+Run with 7ze file.txt password or 7ze directory password
 
 7zed
 -----
+7zs all files and directories in the present working directory individually. 
+Also encrypts the files or directories.
+
+Run with 7zed password (nothing else).
 
 apachevis
 -----
