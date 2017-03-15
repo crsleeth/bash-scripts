@@ -5,7 +5,7 @@ if [ "$EUID" -ne 0 ]
         exit 1
 fi
 
-echo -e "wppurge purges all packages installed from the wpin script; \
+echo -e "wordpress-purge.sh purges all packages installed from the wpin script; \
 including ALL MySQL and PHP packages. It also purges ALL MySQL \
 databases/files, ALL Apache directories/files, the wordpress system user, and \
 the /var/www/html directory. PLEASE NOTE: Only works on Ubuntu Server 16.04 \

@@ -5,7 +5,7 @@ if [ "$EUID" -ne 0 ]
         exit 1
 fi
 
-echo -e "wpins installs WordPress and all prerequisites. It sets up and \
+echo -e "wordpress-install.sh installs WordPress and all prerequisites. It sets up and \
 configures Apache and MySQL to work with WordPress; including a WordPress \
 database and system user. Passwords for the MySQL root user, MySQL \
 wordpressuser, and system wordpress user will be stored in root protected \
