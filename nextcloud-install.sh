@@ -10,7 +10,7 @@ echo "This script was tested on Ubuntu Server 16.04.2 LTS 64-bit running on Prox
 echo "Installing updates"
 apt update
 
-echo "Generating three passwords for the users MySQL root, MySQL nextcloud, and Nextcloud admin"
+echo "Generating two passwords for the users MariaDB nextcloud and Nextcloud admin"
 echo "IMPORTANT! You can view these passwords after installation in the nextcloud-passwords folder as root"
 read -p "Continue? (Y/n): " -n 1 -r
 echo
@@ -19,42 +19,27 @@ then
 	exit 1
 fi
 mkdir -m 600 nextcloud-passwords
-openssl rand -base64 12 > nextcloud-passwords/"mysql-root.txt"
-openssl rand -base64 12 > nextcloud-passwords/"mysql-nextcloud.txt"
+openssl rand -base64 12 > nextcloud-passwords/"mariadb-nextcloud.txt"
 openssl rand -base64 12 > nextcloud-passwords/"nextcloud-admin.txt"
-mysqlroot=$(cat nextcloud-passwords/mysql-root.txt)
-mysqlnextcloud=$(cat nextcloud-passwords/mysql-nextcloud.txt)
+mariadbnextcloud=$(cat nextcloud-passwords/mariadb-nextcloud.txt)
 nextcloudadmin=$(cat nextcloud-passwords/nextcloud-admin.txt)
 
 echo "Installing packages"
-# Inject mysqlroot password into mysql-server installation
-debconf-set-selections <<< "mysql-server mysql-server/root_password password $mysqlroot"
-debconf-set-selections <<< "mysql-server mysql-server/root_password_again password $mysqlroot"
 # Install packages
-apt install -y mysql-server
-apt install -y apache2 php libapache2-mod-php php-mcrypt php-mysql php-bz2 php-curl php-gd php-imagick php-intl php-mbstring php-xml php-zip
-
-echo "Running MySQL secure installation"
-echo "Removing anonymous users"
-mysql -u root -p"$mysqlroot" -e "DELETE FROM mysql.user WHERE User='';"
-echo "Disabling remote root login"
-mysql -u root -p"$mysqlroot" -e "DELETE FROM mysql.user WHERE User='root' AND Host NOT IN ('localhost', '127.0.0.1', '::1');"
-echo "Removing test database"
-mysql -u root -p"$mysqlroot" -e "DROP DATABASE IF EXISTS test;"
-mysql -u root -p"$mysqlroot" -e "DELETE FROM mysql.db WHERE Db='test' OR Db='test\\_%'"
-echo "Reloading privileges"
-mysql -u root -p"$mysqlroot" -e "FLUSH PRIVILEGES;"
+apt install -y apache2 mariadb-server libapache2-mod-php7.0
+apt install -y php7.0-gd php7.0-json php7.0-mysql php7.0-curl php7.0-mbstring
+apt install -y php7.0-intl php7.0-mcrypt php-imagick php7.0-xml php7.0-zip
 
 echo "Creating nextcloud MySQL database"
-mysql -u root -p"$mysqlroot" -e "CREATE DATABASE nextcloud;"
+mysql -e "CREATE DATABASE nextcloud;"
 echo "Creating MySQL nextcloud user with nextcloud database privileges"
-mysql -u root -p"$mysqlroot" -e "GRANT ALL ON nextcloud.* to 'nextcloud'@'localhost' IDENTIFIED BY '$mysqlnextcloud';"
+mysql -e "GRANT ALL ON nextcloud.* to 'nextcloud'@'localhost' IDENTIFIED BY '$mariadbnextcloud';"
 echo "Reloading privileges"
-mysql -u root -p"$mysqlroot" -e "FLUSH PRIVILEGES;"
+mysql -e "FLUSH PRIVILEGES;"
 
 echo "Downloading and extracting latest Nextcloud"
 wget -O /tmp/latest.tar.bz2 https://download.nextcloud.com/server/releases/latest.tar.bz2
-tar xjf /tmp/latest.tar.bz2 -C /var/www
+tar -xjf /tmp/latest.tar.bz2 -C /var/www
 rm /tmp/latest.tar.bz2
 
 echo "Configuring permissions"
@@ -77,10 +62,8 @@ chmod 640 /var/www/nextcloud/.htaccess
 chown root:www-data /var/www/nextcloud/.htaccess
 
 echo "Creating nextcloud Apache conf"
-read -p "Enter your Nextcloud webmaster's email address: " apacheserveradmin
 echo "<VirtualHost *:80>
 
-  ServerAdmin $apacheserveradmin
   DocumentRoot /var/www/nextcloud
 
   ErrorLog ${APACHE_LOG_DIR}/error.log
@@ -116,21 +99,29 @@ else
 fi
 
 echo "Enabling nextcloud website and restarting Apache"
-a2ensite nextcloud
 a2dissite 000-default
+a2ensite nextcloud
 a2enmod rewrite
+a2enmod headers
+a2enmod env
+a2enmod dir
+a2enmod mime
 systemctl restart apache2
 
 echo "Setting up Nextcloud"
-sudo -u www-data php /var/www/nextcloud/occ maintenance:install --database "mysql" --database-name "nextcloud" --database-user "nextcloud" --database-pass "$mysqlnextcloud" --admin-user "admin" --admin-pass "$nextcloudadmin"
+sudo -u www-data php /var/www/nextcloud/occ maintenance:install --database "mysql" --database-name "nextcloud" --database-user "nextcloud" --database-pass "$mariadbnextcloud" --admin-user "admin" --admin-pass "$nextcloudadmin"
 
-echo "Removing index.php from URLs aka configuring pretty URLs"
+echo "Removing index.php from URLs aka pretty URLs"
 sed -i '$ d' /var/www/nextcloud/config/config.php
 echo "  'htaccess.RewriteBase' => '/'," >> /var/www/nextcloud/config/config.php
 echo ");" >> /var/www/nextcloud/config/config.php
 chmod g+w /var/www/nextcloud/.htaccess
 sudo -u www-data /var/www/nextcloud/occ maintenance:update:htaccess
 chmod g-w /var/www/nextcloud/.htaccess
+
+echo "Increasing upload size to 16GB"
+
+echo "Increasing upload time to 3600"
 
 echo "Adding IP address to trusted domains"
 # Get IP address
