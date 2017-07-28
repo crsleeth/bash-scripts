@@ -26,13 +26,11 @@ nextcloudadmin=$(cat nextcloud-passwords/nextcloud-admin.txt)
 
 echo "Installing packages"
 # Install packages
-apt install -y apache2 mariadb-server libapache2-mod-php7.0
-apt install -y php7.0-gd php7.0-json php7.0-mysql php7.0-curl php7.0-mbstring
-apt install -y php7.0-intl php7.0-mcrypt php-imagick php7.0-xml php7.0-zip
+apt install -y apache2 mariadb-server libapache2-mod-php7.0 php7.0-gd php7.0-json php7.0-mysql php7.0-curl php7.0-mbstring php7.0-intl php7.0-mcrypt php-imagick php7.0-xml php7.0-zip
 
-echo "Creating nextcloud MySQL database"
+echo "Creating nextcloud MariaDB database"
 mysql -e "CREATE DATABASE nextcloud;"
-echo "Creating MySQL nextcloud user with nextcloud database privileges"
+echo "Creating MariaDB nextcloud user with nextcloud database privileges"
 mysql -e "GRANT ALL ON nextcloud.* to 'nextcloud'@'localhost' IDENTIFIED BY '$mariadbnextcloud';"
 echo "Reloading privileges"
 mysql -e "FLUSH PRIVILEGES;"
@@ -118,10 +116,6 @@ echo ");" >> /var/www/nextcloud/config/config.php
 chmod g+w /var/www/nextcloud/.htaccess
 sudo -u www-data /var/www/nextcloud/occ maintenance:update:htaccess
 chmod g-w /var/www/nextcloud/.htaccess
-
-echo "Increasing upload size to 16GB"
-
-echo "Increasing upload time to 3600"
 
 echo "Adding IP address to trusted domains"
 # Get IP address
