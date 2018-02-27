@@ -34,9 +34,9 @@ for i in "${users[@]}"
 do
 	echo "OK, setting up user $i vncserver"
 	# Start and stop vncserver for user to create default configs
-	su user -c "/usr/bin/vncserver"
-	su user -c "/usr/bin/vncserver -kill :1"
-	su user -c "/usr/bin/vncserver -kill :$x"
+	su $i -c "/usr/bin/vncserver"
+	su $i -c "/usr/bin/vncserver -kill :1"
+	su $i -c "/usr/bin/vncserver -kill :$x"
 
 	# Backup default xstartup, create working xfce4 replacement
 	cp /home/$i/.vnc/xstartup /home/$i/.vnc/xstartup.bak
