@@ -23,7 +23,7 @@ for f in *tigervncserver*
 done
 echo "Installing packages"
 apt install -y xfce4
-# Install tigervnc deb and its missing depends
+ Install tigervnc deb and its missing depends
 dpkg -i tigervncserver*.deb
 apt install -f -y
 
@@ -46,44 +46,44 @@ do
 
 	# Create init.d service
 	echo -e '#!/bin/bash
-	PATH="$PATH:/usr/bin/"
-	export USER='${i}'
-	DISPLAY="1"
-	DEPTH="16"
-	GEOMETRY="1920x1080"
-	OPTIONS="-depth ${DEPTH} -geometry ${GEOMETRY} :${DISPLAY} -localhost"
-	. /lib/lsb/init-functions
-	' > /etc/init.d/vncserver-$i
+PATH="$PATH:/usr/bin/"
+export USER="'$i'"
+DISPLAY="1"
+DEPTH="16"
+GEOMETRY="1920x1080"
+OPTIONS="-depth ${DEPTH} -geometry ${GEOMETRY} :${DISPLAY} -localhost"
+. /lib/lsb/init-functions
+' > /etc/init.d/vncserver-$i
 
 	echo -e 'case "$1" in
-	start)
-	log_action_begin_msg "Starting vncserver for user '${USER}' on localhost:${DISPLAY}"
-	su ${USER} -c "/usr/bin/vncserver ${OPTIONS}"
-	;;
-	' >> /etc/init.d/vncserver-$i
+start)
+log_action_begin_msg "Starting vncserver for user '${USER}' on localhost:${DISPLAY}"
+su ${USER} -c "/usr/bin/vncserver ${OPTIONS}"
+;;
+' >> /etc/init.d/vncserver-$i
 
 	echo -e 'stop)
-	log_action_begin_msg "Stopping vncserver for user '${USER}' on localhost:${DISPLAY}"
-	su ${USER} -c "/usr/bin/vncserver -kill :${DISPLAY}"
-	;;
-	' >> /etc/init.d/vncserver-$i
+log_action_begin_msg "Stopping vncserver for user '${USER}' on localhost:${DISPLAY}"
+su ${USER} -c "/usr/bin/vncserver -kill :${DISPLAY}"
+;;
+' >> /etc/init.d/vncserver-$i
 
 	echo -e 'restart)
-	$0 stop
-	$0 start
-	;;
-	esac
-	exit 0
-	' >> /etc/init.d/vncserver-$i
+$0 stop
+$0 start
+;;
+esac
+exit 0
+' >> /etc/init.d/vncserver-$i
 
 	chmod +x /etc/init.d/vncserver-$i
 
 	# Change xfce4 keyboard setting for tab key
-	sed -i 's/.*switch_window_key.*/\<property name\=\"\&lt\;Super\&gt\;Tab\" type\=\"empty\"\/\>/' /home/$i/.config/xfce4/xfconf/xfce-perchannel-xml/xfce4-keyboard-shortcuts.xml
+	sed -i 's/.*switch_window_key.*/      \<property name\=\"\&lt\;Super\&gt\;Tab\" type\=\"empty\"\/\>/' /home/$i/.config/xfce4/xfconf/xfce-perchannel-xml/xfce4-keyboard-shortcuts.xml
 
 	# Start and enable init.d service
-	service start vncserver
-	update-rc.d vncserver defaults
+	service vncserver-$i start
+	update-rc.d vncserver-$i defaults
 
 	x=$((x+1))
 done
