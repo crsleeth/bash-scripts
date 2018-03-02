@@ -23,7 +23,7 @@ for f in *tigervncserver*
 done
 echo "Installing packages"
 apt install -y xfce4
- Install tigervnc deb and its missing depends
+# Install tigervnc deb and its missing depends
 dpkg -i tigervncserver*.deb
 apt install -f -y
 
