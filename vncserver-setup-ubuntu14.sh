@@ -51,19 +51,19 @@ export USER="'$i'"
 DISPLAY="1"
 DEPTH="16"
 GEOMETRY="1920x1080"
-OPTIONS="-depth ${DEPTH} -geometry ${GEOMETRY} :${DISPLAY} -localhost"
+OPTIONS="-depth ${DEPTH} -geometry ${GEOMETRY} :${DISPLAY}"
 . /lib/lsb/init-functions
 ' > /etc/init.d/vncserver-$i
 
 	echo -e 'case "$1" in
 start)
-log_action_begin_msg "Starting vncserver for user '${USER}' on localhost:${DISPLAY}"
+log_action_begin_msg "Starting vncserver for user ${USER} on localhost:${DISPLAY}"
 su ${USER} -c "/usr/bin/vncserver ${OPTIONS}"
 ;;
 ' >> /etc/init.d/vncserver-$i
 
 	echo -e 'stop)
-log_action_begin_msg "Stopping vncserver for user '${USER}' on localhost:${DISPLAY}"
+log_action_begin_msg "Stopping vncserver for user ${USER} on localhost:${DISPLAY}"
 su ${USER} -c "/usr/bin/vncserver -kill :${DISPLAY}"
 ;;
 ' >> /etc/init.d/vncserver-$i
