@@ -48,7 +48,7 @@ do
 	echo -e '#!/bin/bash
 PATH="$PATH:/usr/bin/"
 export USER="'$i'"
-DISPLAY="1"
+DISPLAY="'$x'"
 DEPTH="16"
 GEOMETRY="1920x1080"
 OPTIONS="-depth ${DEPTH} -geometry ${GEOMETRY} :${DISPLAY}"
