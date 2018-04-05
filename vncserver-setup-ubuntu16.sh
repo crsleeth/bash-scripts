@@ -45,7 +45,7 @@ do
 
 	# Backup default xstartup, create working xfce4 replacement
 	cp /home/$i/.vnc/xstartup /home/$i/.vnc/xstartup.bak
-	echo -e "#!/bin/bash\nxrdb $HOME/.Xresources\nstartxfce4 &\n" > /home/$i/.vnc/xstartup
+	echo -e "#!/bin/bash\nxrdb /home/$i/.Xresources\nstartxfce4 &\n" > /home/$i/.vnc/xstartup
 	chown -R $i:$i /home/$i/.vnc
 	chmod +x /home/$i/.vnc/xstartup
 
